@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Textcomplete</title>
+    <link rel="stylesheet" href="../build/build.css">
+    <script src="../build/build.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 16px;
+      }
+
+      .container {
+        position: relative;
+      }
+
+      textarea {
+        display: block;
+        width: 300px;
+        margin: 5px;
+        padding: 5px;
+        border: 1px solid #ccc;
+      }
+
+      .Textcomplete-menu {
+        width: 320px;
+        height: auto;
+        max-width: 100%;
+        border: 1px solid #ccc;
+        background-color: white;
+        box-shadow: 0 1px 2px 1px rgba(0, 0, 0, .15);
+        /* transitions are messing my iphone for some reason */
+        /*transition: all .3s linear;*/
+      }
+
+      .Textcomplete-hidden {
+        height: 0;
+        opacity: 0;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .Textcomplete-option {
+        margin: 0;
+        padding: 5px;
+        border: 1px solid #bbb;
+      }
+
+      .Textcomplete-highlighted {
+        background-color: blue;
+      }
+
+      p {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>Selected: <span></span></p>
+      <textarea rows="5"></textarea>
+    </div>
+    <script>
+      var Textcomplete = require('textcomplete')
+      var position = require('textarea-caret-position')
+      var el = document.querySelector('textarea')
+      var span = document.querySelector('p span')
+      var search = Textcomplete(el)
+      var handles = [
+        'taylorswift13',
+        'jongleberry',
+        'tjholowaychuk',
+        'snoop_dogg',
+        'tootallnate',
+        'necolas',
+      ]
+      search.re = /@(\w{1,15})$/
+      search.formatSelection = function (option) {
+        return '@' + (option.title || option.name)
+      }
+      search.query = function (match) {
+        search.clear()
+
+        console.log('queried: ' + JSON.stringify(match))
+        var str = match[1]
+        var matches = handles.filter(function (handle) {
+          return !handle.indexOf(str)
+        })
+
+        if (!matches.length) return search.hide()
+
+        search.show()
+        search.push(matches)
+        search.highlight(0)
+        var positions = position(el, el.selectionEnd - match[0].length)
+        // top 1px border + 16px line-height
+        // left 1px border + 5px margin
+        search.position(positions.top + 17, positions.left + 6)
+      }
+      search.on('change', function (option) {
+        span.textContent = option.id
+      })
+      search.on('hide', function () {
+        console.log('hide')
+      })
+      search.on('show', function () {
+        console.log('show')
+      })
+    </script>
+  </body>
+</html>

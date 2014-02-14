@@ -1,0 +1,28 @@
+{
+  "name": "textcomplete",
+  "version": "0.0.1",
+  "description": "textcomplete",
+  "dependencies": {
+    "component/query": "*",
+    "component/keyname": "*",
+    "component/classes": "*",
+    "component/debounce": "*",
+    "discore/closest": "*",
+    "jonathanong/complement": "*",
+    "ianstormtaylor/next-sibling": "*",
+    "ianstormtaylor/previous-sibling": "*"
+  },
+  "development": {
+    "component/assert": "*",
+    "ianstormtaylor/trigger-event": "*",
+    "component/textarea-caret-position": "*"
+  },
+  "main": "lib/index.js",
+  "scripts": [
+    "lib/index.js"
+  ],
+  "styles": [
+    "lib/index.css"
+  ],
+  "license": "MIT"
+}

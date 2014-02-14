@@ -1,0 +1,21 @@
+/**
+
+  .container - should have non-static positioning
+    .Textcomplete-menu(.Textcomplete-hidden)
+      .Textcomplete-option(.Textcomplete-highlighted)
+    textarea
+
+*/
+
+.Textcomplete-menu {
+  position: absolute;
+}
+
+/**
+ * Not necessarily a <a>,
+ * but always clickable!
+ */
+
+.Textcomplete-option {
+  cursor: pointer;
+}
